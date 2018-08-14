@@ -4,10 +4,12 @@
 
 
 ## Installation
-+ [Nodejs] (https://nodejs.org/en/)
-+ Express
 
-#### * Simply run*
++ [Nodejs](https://nodejs.org/en/)
++ [Expressjs](https://expressjs.com/)
+
+#### **Simply run**
+
 ```shell
 $ node app.js
 
