@@ -1,17 +1,28 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 
 const app = express();
 // require our routes/index.js file
 const userRoutes = require('./routes/usersRouter');
-const index = require('./routes/index');
+const indexRoutes = require('./routes/index');
 
+
+// npm install --save express body-parser morgan
+/**
+const logger = (req, res, next) =>{
+  console.log('Logging...!');
+  next();
+}
+*/
+app.use(morgan("tiny"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Now let's tell our app about those routes we made!
-app.use("/", index);
+app.use("/", indexRoutes);
 app.use("/users", userRoutes);
+//app.use(userRoutes);
 
 
 
@@ -29,6 +40,7 @@ app.use((err, req, res, next) => {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
+  res.status(status).send(body)
   res.status(err.status || 500);
   res.render('error');
 });
@@ -36,5 +48,5 @@ app.use((err, req, res, next) => {
 
 
 app.listen(3000, () => {
-  console.log("Server is listening on port 3000");
+  console.log("Server is listening on port 3000!... ");
 });

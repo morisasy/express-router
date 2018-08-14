@@ -1,44 +1,50 @@
 
 const express = require("express");
 const userRouter = express.Router();
-const bodyParser = require("body-parser");
 
-const users = [];
-var id = 1;
+const users = [
+  {name: "Jasmini",
+   id: 1},
+   {name: "Miko",
+    id: 2
+  },
+  {name: "Jasmini",
+     id: 3
+  },
+  {name: "Kiara",
+     id: 4
+  }
+];
+let id = 4;
 
-userRouter.use(bodyParser.json());
 
-// declare the route first, then all the methods on it
-userRouter.route("/")
-.all((req,res,next) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  next();
-})
-  .get(() => {
+userRouter
+  .route("")
+  .get((req, res) => {
     return res.json(users);
   })
-  .post(() => {
+  .post((req, res) => {
     users.push({
       name: req.body.name,
       id: ++id
     });
-    return res.json({ message: "Created" });
+    return res.json({message: "Created"});
   });
 
 userRouter
   .route("/:id")
   .get((req, res) => {
     const user = users.find(val => val.id === Number(req.params.id));
-  // const user = users.includes(Number(req.params.id));
     return res.json(user);
   })
   .put((req, res) => {
+    const user = users.find(val => val.id === Number(req.params.id));
     user.name = req.body.name;
     return res.json({ message: "Updated" });
   })
   .delete((req, res) => {
-    users.splice(user.id, 1);
+    const userIndex = users.findIndex(val => val.id === Number(req.params.id));
+    users.splice(userIndex, 1);
     return res.json({ message: "Deleted" });
   });
 
