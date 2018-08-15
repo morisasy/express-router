@@ -7,14 +7,9 @@ const app = express();
 const userRoutes = require('./routes/usersRouter');
 const indexRoutes = require('./routes/index');
 
+const productsRoutes = require('./routes/productsRouter');
 
-// npm install --save express body-parser morgan
-/**
-const logger = (req, res, next) =>{
-  console.log('Logging...!');
-  next();
-}
-*/
+
 app.use(morgan("tiny"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Now let's tell our app about those routes we made!
 app.use("/", indexRoutes);
 app.use("/users", userRoutes);
+app.use("/products", productsRoutes);
 //app.use(userRoutes);
 
 
